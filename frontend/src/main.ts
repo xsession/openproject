@@ -8,6 +8,7 @@ import { enableReactiveStatesLogging } from 'reactivestates';
 import { initializeLocale } from 'core-app/core/setup/init-locale';
 import { environment } from './environments/environment';
 import '@hotwired/turbo';
+import '@hotwired/turbo-rails';
 
 (window as any).global = window;
 
