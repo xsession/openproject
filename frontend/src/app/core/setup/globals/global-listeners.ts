@@ -40,6 +40,7 @@ import { listenToSettingChanges } from 'core-app/core/setup/globals/global-liste
 import { detectOnboardingTour } from 'core-app/core/setup/globals/onboarding/onboarding_tour_trigger';
 import { augmentedDatePicker } from './global-listeners/augmented-date-picker';
 import { performAnchorHijacking } from './global-listeners/link-hijacking';
+import { bootstrapTurboFrames } from 'core-app/core/setup/globals/global-listeners/bootstrap-turbo-frames';
 
 /**
  * A set of listeners that are relevant on every page to set sensible defaults
@@ -148,5 +149,8 @@ import { performAnchorHijacking } from './global-listeners/link-hijacking';
 
     // Bootstrap legacy app code
     setupServerResponse();
+
+    // Bootstrap on turbo frames
+    bootstrapTurboFrames();
   });
 }(jQuery));
