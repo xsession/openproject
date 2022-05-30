@@ -338,3 +338,5 @@ end
 gem "turbo-rails", "~> 1.1"
 
 gem "redis", "~> 4.6"
+
+gem "view_component", "~> 2.55"
