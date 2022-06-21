@@ -27,19 +27,8 @@ See COPYRIGHT and LICENSE files for more details.
 
 ++#%>
 
-<%= content_for :header_tags do %>
-  <% html_title(*local_assigns[:page_title]) if local_assigns[:page_title].present? %>
-  <!-- plug-in specific tags -->
-  <%= call_hook :view_work_package_overview_attributes %>
-<% end -%>
+<div id="split_view_tab" data-turbo-action="replace" data-controller="split-view">
+  Overview!
 
-<%= content_for :content_body do %>
-  <openproject-base></openproject-base>
-
-  <%# Allow projection pages to show rails rendered content after initialization %>
-  <div id="projected-content">
-    <%= yield %>
-  </div>
-<% end -%>
-
-<%= render template: 'layouts/base', locals: local_assigns.merge({ no_action_menu: true }) %>
+  <macro class="macro--wp-quickinfo" data-id="1899"></macro>
+</div>

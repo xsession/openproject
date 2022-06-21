@@ -43,6 +43,7 @@ import interactionPlugin, { EventResizeDoneArg } from '@fullcalendar/interaction
 import { HalResourceEditingService } from 'core-app/shared/components/fields/edit/services/hal-resource-editing.service';
 import { HalResourceNotificationService } from 'core-app/features/hal/services/hal-resource-notification.service';
 import { splitViewRoute } from 'core-app/features/work-packages/routing/split-view-routes.helper';
+import * as Turbo from '@hotwired/turbo';
 
 @Component({
   templateUrl: './wp-calendar.template.html',
@@ -159,7 +160,13 @@ export class WorkPackagesCalendarComponent extends UntilDestroyedMixin implement
         // Currently the calendar widget is shown on multiple pages,
         // but only the calendar module itself is a partitioned query space which can deal with a split screen request
         if (this.$state.includes('calendar')) {
-          this.calendar.openSplitView(workPackageId);
+          const url = new URL(window.location.href)
+          url.pathname += `/split/${workPackageId}`;
+          const frame = document.querySelector('turbo-frame#split_view') as any;
+          frame.src = url.toString();
+          frame.reload();
+          //Turbo.visit(url.toString(), { action: 'advance' });
+          // this.calendar.openSplitView(workPackageId);
         } else {
           void this.$state.go(
             'work-packages.show',

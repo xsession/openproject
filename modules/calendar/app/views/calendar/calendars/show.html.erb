@@ -28,3 +28,6 @@ See COPYRIGHT and LICENSE files for more details.
 ++#%>
 
 <% html_title(t(:label_calendar_plural)) -%>
+
+<%= turbo_frame_tag 'split_view', data: { 'turbo-action': 'advance' } do %>
+<% end %>

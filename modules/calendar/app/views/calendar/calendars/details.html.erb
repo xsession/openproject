@@ -27,19 +27,20 @@ See COPYRIGHT and LICENSE files for more details.
 
 ++#%>
 
-<%= content_for :header_tags do %>
-  <% html_title(*local_assigns[:page_title]) if local_assigns[:page_title].present? %>
-  <!-- plug-in specific tags -->
-  <%= call_hook :view_work_package_overview_attributes %>
-<% end -%>
-
-<%= content_for :content_body do %>
-  <openproject-base></openproject-base>
-
-  <%# Allow projection pages to show rails rendered content after initialization %>
-  <div id="projected-content">
-    <%= yield %>
+<%= turbo_frame_tag 'split_view', data: { 'turbo-action': 'advance' } do %>
+  <div class="cool-split-view">
+    <nav>
+      <%= link_to 'Overview',
+                  { action: :overview },
+                  class: 'button' %>
+      <%= link_to 'Relations',
+                  { action: :relations },
+                  class: 'button' %>
+    </nav>
   </div>
-<% end -%>
+  <%= render partial: tab.to_s %>
 
-<%= render template: 'layouts/base', locals: local_assigns.merge({ no_action_menu: true }) %>
+  <%= link_to 'Close',
+              { action: :show },
+              class: 'button' %>
+<% end %>
