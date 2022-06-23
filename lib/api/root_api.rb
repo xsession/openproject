@@ -35,6 +35,7 @@ require 'open_project/authentication'
 module API
   class RootAPI < Grape::API
     include OpenProject::Authentication::Scope
+    include ::API::AppsignalAPI
     extend API::Utilities::GrapeHelper
 
     insert_before Grape::Middleware::Error,
@@ -91,7 +92,7 @@ module API
 
         # Raise if missing header
         content_type = request.content_type
-        error!('Missing content-type header', 406) unless content_type.present?
+        error!('Missing content-type header', 406, { 'Content-Type' => 'text/plain' }) if content_type.blank?
 
         # Allow JSON and JSON+HAL per default
         # and anything that each endpoint may optionally add to that
@@ -257,6 +258,7 @@ module API
       authenticate
       set_localization
       enforce_content_type
+      ::OpenProject::Appsignal.tag_request(request:)
     end
   end
 end

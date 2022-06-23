@@ -63,10 +63,9 @@ module UsersHelper
 
     both_statuses = user_status + brute_force_status
     if user_status.present? and brute_force_status.present?
-      I18n.t(:status_user_and_brute_force,
+      I18n.t('user.status_user_and_brute_force',
              user: user_status,
-             brute_force: brute_force_status,
-             scope: :user)
+             brute_force: brute_force_status)
     elsif not both_statuses.empty?
       both_statuses
     else
@@ -117,14 +116,6 @@ module UsersHelper
               method: :post,
               class: "icon icon-#{icons[name]}"
     end
-  end
-
-  # Options for the new membership projects combo-box
-  #
-  # Disables projects the user is already member in
-  def options_for_membership_project_select(user, projects)
-    options = project_tree_options_for_select(projects, disabled: user.projects.ids.to_set)
-    content_tag('option', "--- #{I18n.t(:actionview_instancetag_blank_option)} ---") + options
   end
 
   def user_name(user)

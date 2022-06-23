@@ -38,12 +38,12 @@ describe Relations::UpdateService do
   let(:delay) { 3 }
 
   let(:work_package1) do
-    build_stubbed(:stubbed_work_package,
+    build_stubbed(:work_package,
                   due_date: work_package1_due_date,
                   start_date: work_package1_start_date)
   end
   let(:work_package2) do
-    build_stubbed(:stubbed_work_package,
+    build_stubbed(:work_package,
                   due_date: work_package2_due_date,
                   start_date: work_package2_start_date)
   end
@@ -94,10 +94,10 @@ describe Relations::UpdateService do
   context 'when all valid and it is a follows relation' do
     let(:set_schedule_service) { double('set schedule service') }
     let(:set_schedule_work_package2_result) do
-      ServiceResult.new success: true, result: work_package2, errors: work_package2.errors
+      ServiceResult.success result: work_package2, errors: work_package2.errors
     end
     let(:set_schedule_result) do
-      sr = ServiceResult.new success: true, result: work_package2, errors: work_package2.errors
+      sr = ServiceResult.success result: work_package2, errors: work_package2.errors
       sr.dependent_results << set_schedule_work_package2_result
       sr
     end

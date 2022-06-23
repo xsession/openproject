@@ -35,7 +35,7 @@ describe WorkPackagesController, type: :controller do
 
   let(:stub_project) { build_stubbed(:project, identifier: 'test_project', public: false) }
   let(:current_user) { build_stubbed(:user) }
-  let(:work_packages) { [build_stubbed(:stubbed_work_package)] }
+  let(:work_packages) { [build_stubbed(:work_package)] }
 
   describe 'index' do
     let(:query) do
@@ -62,7 +62,7 @@ describe WorkPackagesController, type: :controller do
         allow(service_instance)
           .to receive(:call)
           .with(query:, mime_type: mime_type.to_sym, params: anything)
-          .and_return(ServiceResult.new(result: 'uuid of the export job'))
+          .and_return(ServiceResult.failure(result: 'uuid of the export job'))
       end
 
       it 'redirects to the export' do

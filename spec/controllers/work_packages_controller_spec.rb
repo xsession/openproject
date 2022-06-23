@@ -37,7 +37,7 @@ describe WorkPackagesController, type: :controller do
   let(:stub_project) { build_stubbed(:project, identifier: 'test_project', public: false) }
   let(:type) { build_stubbed(:type) }
   let(:stub_work_package) do
-    build_stubbed(:stubbed_work_package,
+    build_stubbed(:work_package,
                   id: 1337,
                   type:,
                   project: stub_project)
@@ -175,7 +175,7 @@ describe WorkPackagesController, type: :controller do
             allow(service_instance)
               .to receive(:call)
               .with(query:, mime_type: mime_type.to_sym, params: anything)
-              .and_return(ServiceResult.new(result: 'uuid of the export job'))
+              .and_return(ServiceResult.failure(result: 'uuid of the export job'))
           end
 
           it 'redirects to the job status' do
