@@ -2,8 +2,6 @@
 Rails.application.config.after_initialize do
   SecureHeaders::Configuration.default do |config|
     config.csp = SecureHeaders::OPT_OUT
-    next
-
 
     config.cookies = {
       secure: true,
