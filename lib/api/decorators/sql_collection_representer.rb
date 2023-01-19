@@ -45,7 +45,10 @@ module API
         private
 
         def select_from(_walker_result)
-          "projection"
+          # The extra RIGHT JOIN is for the case where the results in `projection`
+          # are empty. If that is the case, the result set would be empty which would lead
+          # to nothing being returned, not even the collections metadata like count, total, ...
+          "projection RIGHT JOIN (VALUES (null)) AS t (placeholder) ON 1 = 1"
         end
 
         def full_self_path(walker_results, overrides = {})
@@ -91,7 +94,10 @@ module API
                representation: ->(*) { "'#{_type}'" }
 
       property :count,
-               representation: ->(*) { "COUNT(*)" }
+               # Because of the added placeholder RIGHT JOIN in the #select_from method,
+               # there will always be at last one column. So in case of not having any values,
+               # the calculation needs to be overridden.
+               representation: ->(*) { "CASE WHEN (SELECT * FROM total) > 0 THEN COUNT(*) ELSE 0 END" }
 
       property :total,
                representation: ->(*) { "(SELECT * from total)" }
