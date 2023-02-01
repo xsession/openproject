@@ -46,6 +46,8 @@ module RakeJob
   def invoke
     load_tasks!
     task.invoke *args
+  ensure
+    task&.reenable
   end
 
   ##
